@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -11,7 +12,12 @@ const Booking = require("./models/Booking");
 const User = require("./models/User");
 const Complaint = require("./models/Complaint");
 const app = express();
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({
+  origin: [
+    "http://localhost:3000",
+    "https://mohanavijayanj-mern-bus-reservation-system.vercel.app"
+  ],
+}));
 app.use(express.json());
 
 const uploadDir = path.join(__dirname, "uploads");
@@ -30,10 +36,10 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
-
-mongoose
-  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/busReservationDB")
-  .then(() => console.log("MongoDB connected to", mongoose.connection.name));
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected to", mongoose.connection.name))
+  .catch(err => console.log(err));
+  
 
 const generateSeats = (total) => {
   const seats = [];
@@ -380,5 +386,6 @@ app.get("/api/health", async (req, res) => {
   }
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
