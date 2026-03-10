@@ -1,0 +1,120 @@
+import React, { useEffect, useState } from "react";
+
+const UserProfile = () => {
+  const [profile, setProfile] = useState({ email: "", phone: "" });
+  const user = localStorage.getItem("username");
+
+  useEffect(() => {
+    if (!user) {
+      window.location.href = "/";
+    }
+    fetch(`http://127.0.0.1:5000/api/user/${user}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && !data.message) {
+          setProfile({ email: data.email || "", phone: data.phone || "" });
+        }
+      });
+  }, [user]);
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    const res = await fetch(`http://127.0.0.1:5000/api/user/${user}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profile),
+    });
+    if (res.ok) {
+      alert("Profile updated successfully!");
+    } else {
+      alert("Error updating profile");
+    }
+  };
+
+  return (
+    <div className="premium-page">
+      <header className="top-nav">
+        <div className="nav-left">
+          <span className="brand">🚌 MV Bus</span>
+        </div>
+        <div className="nav-right">
+          <button className="nav-link" onClick={() => (window.location.href = "/dashboard")}>
+            Home
+          </button>
+          <button className="nav-link" onClick={() => (window.location.href = "/contact")}>
+            💛 Support
+          </button>
+          <button className="nav-link" onClick={() => (window.location.href = "/profile")} style={{ color: '#e53935', fontWeight: 'bold' }}>
+            👤 Profile
+          </button>
+          {localStorage.getItem("role") === "admin" && (
+            <button className="nav-link" onClick={() => (window.location.href = "/admin")}>
+              Admin Panel
+            </button>
+          )}
+          <button className="nav-link" onClick={() => {
+            localStorage.removeItem("username");
+            localStorage.removeItem("role");
+            window.location.href = "/";
+          }}>
+            🚪 Logout ({user})
+          </button>
+        </div>
+      </header>
+
+      <div className="premium-card" style={{ maxWidth: '600px' }}>
+        <div className="profile-header">
+          <div className="avatar-circle">
+            {user ? user.charAt(0).toUpperCase() : "U"}
+          </div>
+          <h2 style={{ fontSize: '28px', color: '#333', marginBottom: '5px' }}>{user}</h2>
+          <span className="profile-badge">Verified Member</span>
+        </div>
+
+        <form onSubmit={handleUpdate}>
+          <div className="profile-info-group">
+            <label>📧 Email Address</label>
+            <input
+              type="email"
+              className="premium-input"
+              value={profile.email}
+              onChange={(e) =>
+                setProfile({ ...profile, email: e.target.value })
+              }
+              placeholder="your-email@example.com"
+            />
+          </div>
+
+          <div className="profile-info-group">
+            <label>📱 Phone Number</label>
+            <input
+              type="text"
+              className="premium-input"
+              value={profile.phone}
+              onChange={(e) => {
+                let val = e.target.value;
+                if (!val.startsWith("+91 ")) {
+                  val = "+91 " + val.replace(/^\+91\s*/, "");
+                }
+                const digitsOnly = val.substring(4).replace(/\D/g, "");
+                if (digitsOnly.length <= 10) {
+                  setProfile({ ...profile, phone: "+91 " + digitsOnly });
+                }
+              }}
+              placeholder="+91 9876543210"
+            />
+          </div>
+
+          <button type="submit" className="action-btn" style={{ width: '100%', padding: '15px', marginTop: '10px' }}>
+            Apply Profile Changes
+          </button>
+        </form>
+
+        <p style={{ textAlign: 'center', marginTop: '30px', color: '#888', fontSize: '12px' }}>
+          MV Bus secure profile management system
+        </p>
+      </div>
+    </div>
+  );
+};
+export default UserProfile;
