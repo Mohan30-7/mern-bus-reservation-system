@@ -250,8 +250,10 @@ Example:
  
   <img width="1920" height="1000" alt="Screenshot (979)" src="https://github.com/user-attachments/assets/085760ca-1aa1-4aab-8c49-f1d7d554c858" />
 
-  <img width="1920" height="1080" alt="Screenshot (984)" src="https://github.com/user-attachments/assets/f6e8c2d1-4c22-4dd4-8f15-c760fd0b7c23" />
-  <img width="1920" height="1080" alt="Screenshot (986)" src="https://github.com/user-attachments/assets/0ca79c25-3835-40d7-8345-dce8a70b3ad3" />
+  <img width="1920" height="983" alt="Screenshot (984)" src="https://github.com/user-attachments/assets/9253a121-f09e-45c1-a01e-18a97731d970" />
+
+  <img width="1920" height="952" alt="Screenshot (985)" src="https://github.com/user-attachments/assets/5446927a-fae1-4019-8eaf-15dbc097e856" />
+
 
 
 * Seat Selection
