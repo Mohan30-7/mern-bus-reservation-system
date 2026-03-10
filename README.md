@@ -1,139 +1,265 @@
-🚌 MV Bus – Online Bus Reservation System
+# 🚌 MV Bus – MERN Bus Reservation System
 
-A full-stack Bus Reservation Web Application built using the MERN Stack (MongoDB, Express, React, Node.js).
-This project allows users to sign up, log in, view available buses, book seats, and view booking history with a clean, user-friendly interface.
+A full-stack **MERN Stack** web application for **bus ticket booking and reservation**.
 
-🚀 Features
+This system allows users to **search buses, select seats, book tickets, and manage bookings**, while administrators can **manage buses, users, bookings, and customer complaints** through a dedicated **Admin Dashboard**.
 
-👤 User Features
+---
 
-User Signup & Login
+# 🚀 Features
 
-Secure session handling using Local Storage
+## 👤 User Features
 
-View available buses with route, timing, and seat availability
+* 🔐 **User Signup & Login** (Role-based: `User` / `Admin`)
+* 💾 Secure session handling using **Local Storage**
+* 📊 **Dashboard** with:
 
-Book seats on selected buses
+  * Featured bus cards (image, route, date, time, driver)
+  * Search buses by **Source, Destination, and Date**
+  * Table of available buses with **real-time seat availability**
+* 🪑 **Interactive Seat Selection**
 
-View previous bookings (even after server restart)
+  * Bus layout view
+  * Seat legends (Available / Booked / Selected)
+* 🧾 **Passenger Details Form**
 
-Interactive FAQ section
+  * Passenger info per seat
+  * Automatic total price calculation
+* 🎟 **Booking System**
 
-Responsive and modern UI
+  * Book seats and store booking details in **MongoDB**
+* 📚 **My Bookings**
 
-🛠 Backend Features
+  * View booked tickets
+  * Seat numbers and passenger details
+* 👤 **User Profile**
 
-RESTful APIs using Express.js
+  * View and update **email & phone number**
+* 📩 **Contact / Support**
 
-MongoDB database with Mongoose schemas
+  * Raise complaints or help tickets
+* 📱 **Responsive UI**
 
-Booking persistence with populated bus data
+  * Works smoothly on **Desktop, Tablet, and Mobile**
 
-Proper error handling for deleted/unavailable buses
+---
 
-CORS enabled for frontend–backend communication
+# 🛠 Admin Features
 
-🧱 Tech Stack
+* 🧑‍💼 **Admin Dashboard Panel**
+* 🚌 **Bus Management**
 
-**Frontend**
+  * Add new buses with image upload
+  * View all available buses
+  * Delete buses
+* 📋 **All Bookings Management**
 
-React.js
+  * View booking details including:
 
-React Router DOM
+    * Customer name
+    * Bus route & number
+    * Passenger list
+    * Seats
+    * Total amount
+    * Booking date
+* 👥 **User Management**
 
-HTML5, CSS3
+  * View registered users
+  * Create new admin accounts
+* 📨 **Complaint Management**
 
-Fetch API
+  * View user complaints
+  * Reply and mark them as resolved
+  * Delete complaints
 
-**Backend**
+---
 
-Node.js
+# 🧱 Tech Stack
 
-Express.js
+## 💻 Frontend
 
-MongoDB
+* ⚛️ React.js
+* 🔗 React Router DOM
+* 🎨 HTML5, CSS3
+* 🌐 Fetch API
 
-Mongoose
+## ⚙ Backend
 
-CORS
+* 🟢 Node.js
+* 🚏 Express.js
+* 🍃 MongoDB
+* 📦 Mongoose
+* 📂 Multer (Image Uploads)
+* 🔄 CORS
 
-⚙️ Installation & Setup
+---
 
-1️⃣ Clone the Repository
+# 📁 Project Structure
 
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+backend/
+server.js
+models/
+Bus.js
+Booking.js
+User.js
+Complaint.js
+uploads/          # Uploaded bus images
 
-2️⃣ Backend Setup
+frontend/
+public/
+src/
+pages/          # Login, Signup, Dashboard, Profile, Admin, Contact
+components/     # SearchBuses, SeatSelection, PassengerDetails
+
+---
+
+# ⚙ Installation & Setup
+
+## 1️⃣ Clone Repository
+
+git clone https://github.com/Mohan30-7/mern-bus-reservation-system.git
+cd mern-bus-reservation-system
+
+---
+
+# 🔧 Backend Setup
 
 cd backend
 npm install
 npm start
 
-Backend runs on: http://localhost:5000
-MongoDB must be running locally on:
+Backend runs at:
+
+http://localhost:5000
+
+MongoDB should run locally at:
+
 mongodb://127.0.0.1:27017/busReservationDB
 
-3️⃣ Frontend Setup
+On first run, **sample buses are automatically seeded** if the database is empty.
+
+---
+
+# 🎨 Frontend Setup
 
 cd frontend
 npm install
 npm start
 
-🔐 API Endpoints
+Frontend runs at:
 
-**Authentication**
+http://localhost:3000
 
-POST /api/signup – User registration
+If the backend is deployed online, update API URLs inside the frontend.
 
-POST /api/login – User login
+Example:
 
-**Bus & Booking**
+http://127.0.0.1:5000
 
-GET /api/buses – Fetch all buses
+Replace with your **live backend URL**.
 
-POST /api/bookings – Create a booking
+---
 
-GET /api/my-bookings/:username – Get bookings for a user
+# 🔐 API Endpoints
 
-🧠 Important Design Consideration
+## Authentication
 
-Buses are seeded on server start.
+POST /api/signup
+POST /api/login
+POST /api/forgot-password
+POST /api/reset-password/:token
 
-Old bookings are safely handled if bus data is unavailable.
+## User Profile
 
-UI displays:
+GET /api/user/:username
+PUT /api/user/:username
 
-✅ Active bookings
+## Buses & Bookings
 
-⚠️ “Bus details unavailable” for deleted buses
+GET /api/buses
+POST /api/bookings
+GET /api/my-bookings/:username
 
-This avoids runtime crashes and ensures a smooth user experience.
+## Complaints
 
-📸 Frontend Screenshots
-<img width="1920" height="983" alt="Screenshot (737)" src="https://github.com/user-attachments/assets/c690b147-7b82-44c7-8d6e-8a540c36f65c" />
-<img width="1920" height="979" alt="Screenshot (738)" src="https://github.com/user-attachments/assets/6076f1d9-34be-470a-84f4-7b5798133162" />
-<img width="1920" height="1017" alt="Screenshot (732)" src="https://github.com/user-attachments/assets/a2c96b78-bbf2-4007-a783-f4c9df81cfa3" />
-<img width="1920" height="972" alt="Screenshot (733)" src="https://github.com/user-attachments/assets/d637e64c-b706-4f78-a163-ef3d67033ffe" />
-<img width="1920" height="1000" alt="Screenshot (734)" src="https://github.com/user-attachments/assets/bf374176-ae13-4c34-a87f-7b8116a972eb" />
-<img width="1920" height="892" alt="Screenshot (735)" src="https://github.com/user-attachments/assets/89c53c0f-1e7e-4558-a73d-b660a14584b9" />
-<img width="1920" height="983" alt="Screenshot (736)" src="https://github.com/user-attachments/assets/93cd30e3-7c4d-418e-82ae-3a34edaeb8c3" />
+POST /api/complaints
+GET /api/complaints/:username
 
-📸 Backend Screenshots
+## Admin APIs
 
-<img width="1920" height="948" alt="Screenshot (741)" src="https://github.com/user-attachments/assets/b5970456-a518-406f-8ce8-53d822d6a47b" />
-<img width="1920" height="945" alt="Screenshot (740)" src="https://github.com/user-attachments/assets/af754baa-783e-4007-82f9-699840c5def8" />
-<img width="1920" height="938" alt="Screenshot (739)" src="https://github.com/user-attachments/assets/cfc90a12-6076-4681-9e19-7b3751c78317" />
+GET /api/admin/bookings
+GET /api/admin/users
+POST /api/admin/users
+POST /api/admin/buses
+DELETE /api/admin/buses/:id
+GET /api/admin/complaints
+PUT /api/admin/complaints/:id/reply
+DELETE /api/admin/complaints/:id
 
+---
 
+# 🧠 Design Considerations
 
+### 🚌 Seeded Bus Data
 
+The backend seeds **sample buses automatically** when the database is empty.
 
+### 🔒 Safe Booking History
 
+Bookings reference buses safely.
 
+If a bus is deleted later, the UI shows:
 
+Bus details unavailable
 
+instead of crashing.
 
+### ⚡ Concurrency-Safe Seat Booking
 
+Backend checks seat availability to **prevent double booking**.
 
+### 📱 Responsive Design
 
+Custom CSS ensures usability across devices.
+
+Responsive behavior includes:
+
+* Admin sidebar collapses into a top row
+* Tables become scrollable on small screens
+* Forms stack vertically for mobile
+
+---
+
+# 📸 Screenshots
+
+(Add screenshots of your project here)
+
+Example:
+
+* Login Page
+* User Dashboard
+* Seat Selection
+* Admin Panel
+* Booking Page
+
+---
+
+# 🌐 Deployment
+
+Frontend can be deployed on **Vercel**.
+
+Backend can be deployed on **Render** or **Railway**.
+
+Database can be hosted on **MongoDB Atlas**.
+
+After deployment, update the frontend API URL to connect with the live backend.
+
+---
+
+# 👨‍💻 Author
+
+**Mohanavijayan J**
+Final Year B.Tech CSE
+
+GitHub:
+https://github.com/Mohan30-7
