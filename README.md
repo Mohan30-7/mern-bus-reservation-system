@@ -237,10 +237,35 @@ Responsive behavior includes:
 Example:
 
 * Login Page
+  
+  <img width="1920" height="892" alt="Screenshot (982)" src="https://github.com/user-attachments/assets/a4762d41-83a2-4bc6-b8a4-412ce680313f" />
+
+  <img width="1920" height="948" alt="Screenshot (988)" src="https://github.com/user-attachments/assets/e79cdf35-380f-4916-a325-56dce6953115" />
+  <img width="1920" height="851" alt="Screenshot (989)" src="https://github.com/user-attachments/assets/b2db5fd2-9688-49d4-bfcd-23a15003d0ef" />
+
+
 * User Dashboard
+  
+  <img width="1920" height="906" alt="Screenshot (983)" src="https://github.com/user-attachments/assets/8347c275-330b-44b9-b0d2-bcaecd957b20" />
+ 
+  <img width="1920" height="1000" alt="Screenshot (979)" src="https://github.com/user-attachments/assets/085760ca-1aa1-4aab-8c49-f1d7d554c858" />
+
+  <img width="1920" height="1080" alt="Screenshot (984)" src="https://github.com/user-attachments/assets/f6e8c2d1-4c22-4dd4-8f15-c760fd0b7c23" />
+  <img width="1920" height="1080" alt="Screenshot (986)" src="https://github.com/user-attachments/assets/0ca79c25-3835-40d7-8345-dce8a70b3ad3" />
+
+
 * Seat Selection
+  
+   <img width="1920" height="1004" alt="Screenshot (996)" src="https://github.com/user-attachments/assets/7b482049-0a18-4c48-bca1-69745d736e73" />
+   
 * Admin Panel
-* Booking Page
+  
+  <img width="1920" height="965" alt="Screenshot (990)" src="https://github.com/user-attachments/assets/9d8c6ce7-659b-4d3c-a6eb-154737e9400a" />
+  <img width="1920" height="754" alt="Screenshot (991)" src="https://github.com/user-attachments/assets/334affe8-3324-4450-90a9-68ddda8c8c9f" />
+  <img width="1920" height="724" alt="Screenshot (992)" src="https://github.com/user-attachments/assets/0c35d0a2-f5a8-414c-b7bc-ef854260aea4" />
+
+
+
 
 ---
 
