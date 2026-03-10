@@ -164,36 +164,36 @@ Replace with your **live backend URL**.
 
 ## Authentication
 
-POST /api/signup
-POST /api/login
-POST /api/forgot-password
+POST /api/signup,
+POST /api/login,
+POST /api/forgot-password,
 POST /api/reset-password/:token
 
 ## User Profile
 
-GET /api/user/:username
+GET /api/user/:username,
 PUT /api/user/:username
 
 ## Buses & Bookings
 
-GET /api/buses
-POST /api/bookings
+GET /api/buses,
+POST /api/bookings,
 GET /api/my-bookings/:username
 
 ## Complaints
 
-POST /api/complaints
+POST /api/complaints,
 GET /api/complaints/:username
 
 ## Admin APIs
 
-GET /api/admin/bookings
-GET /api/admin/users
-POST /api/admin/users
-POST /api/admin/buses
-DELETE /api/admin/buses/:id
-GET /api/admin/complaints
-PUT /api/admin/complaints/:id/reply
+GET /api/admin/bookings,
+GET /api/admin/users,
+POST /api/admin/users,
+POST /api/admin/buses,
+DELETE /api/admin/buses/:id,
+GET /api/admin/complaints,
+PUT /api/admin/complaints/:id/reply,
 DELETE /api/admin/complaints/:id
 
 ---
@@ -259,7 +259,11 @@ After deployment, update the frontend API URL to connect with the live backend.
 # 👨‍💻 Author
 
 **Mohanavijayan J**
-Final Year B.Tech CSE
+B.Tech CSE Graduate
 
-GitHub:
+🔗 GitHub:
 https://github.com/Mohan30-7
+
+🔗 LinkedIn:
+https://linkedin.com/in/mohanavijayan-j
+
