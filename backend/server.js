@@ -271,22 +271,30 @@ res.status(201).json(complaint);
 /* ---------------- HEALTH CHECK ---------------- */
 
 app.get("/api/health", async (req, res) => {
-try {
-const busCount = await Bus.countDocuments();
+  try {
+    let busCount = 0;
 
-```
-res.json({
-  ok: true,
-  db: mongoose.connection.name,
-  busCount,
-  serverTime: new Date().toISOString(),
-});
-```
+    if (mongoose.connection.readyState === 1) {
+      busCount = await Bus.countDocuments();
+    }
 
-} catch (e) {
-res.status(500).json({ ok: false, error: e.message });
-}
+    res.json({
+      ok: true,
+      db: mongoose.connection.name || "connected",
+      busCount,
+      serverTime: new Date().toISOString(),
+    });
+
+  } catch (err) {
+    console.error("Health check error:", err);
+
+    res.json({
+      ok: false,
+      error: err.message
+    });
+  }
 });
+
 
 /* ---------------- SERVER ---------------- */
 
