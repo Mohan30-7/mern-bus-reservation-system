@@ -261,11 +261,34 @@ res.json(booking);
 /* ---------------- COMPLAINTS ---------------- */
 
 app.post("/api/complaints", async (req, res) => {
-const { username, subject, message } = req.body;
+  const { username, subject, message } = req.body;
 
-const complaint = await Complaint.create({ username, subject, message });
+  const complaint = await Complaint.create({ username, subject, message });
 
-res.status(201).json(complaint);
+  res.status(201).json(complaint);
+});
+
+// User: fetch own complaints history
+app.get("/api/complaints/:username", async (req, res) => {
+  try {
+    const { username } = req.params;
+    const complaints = await Complaint.find({ username }).sort({
+      createdAt: -1,
+    });
+    res.json(complaints);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching complaints" });
+  }
+});
+
+// Admin: fetch all complaints
+app.get("/api/admin/complaints", async (req, res) => {
+  try {
+    const complaints = await Complaint.find().sort({ createdAt: -1 });
+    res.json(complaints);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching complaints" });
+  }
 });
 
 /* ---------------- HEALTH CHECK ---------------- */
