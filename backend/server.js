@@ -232,30 +232,43 @@ res.status(500).json({ message: "Error adding bus" });
 /* ---------------- BOOKINGS ---------------- */
 
 app.post("/api/bookings", async (req, res) => {
-const { busId, customerName, passengers } = req.body;
+  const { busId, customerName, passengers } = req.body;
 
-const bus = await Bus.findById(busId);
+  const bus = await Bus.findById(busId);
 
-const seatsToBook = passengers.map((p) => p.seatNumber);
+  const seatsToBook = passengers.map((p) => p.seatNumber);
 
-if (!bus || bus.availableSeats < seatsToBook.length)
-return res.status(400).json({ message: "Error" });
+  if (!bus || bus.availableSeats < seatsToBook.length)
+    return res.status(400).json({ message: "Error" });
 
-bus.availableSeats -= seatsToBook.length;
+  bus.availableSeats -= seatsToBook.length;
 
-await bus.save();
+  await bus.save();
 
-const totalAmount = bus.price * seatsToBook.length;
+  const totalAmount = bus.price * seatsToBook.length;
 
-const booking = await Booking.create({
-bus: bus._id,
-customerName,
-seatsBooked: seatsToBook.length,
-passengers,
-totalAmount,
+  const booking = await Booking.create({
+    bus: bus._id,
+    customerName,
+    seatsBooked: seatsToBook.length,
+    passengers,
+    totalAmount,
+  });
+
+  res.json(booking);
 });
 
-res.json(booking);
+// Fetch bookings for a specific user
+app.get("/api/my-bookings/:username", async (req, res) => {
+  try {
+    const { username } = req.params;
+    const bookings = await Booking.find({ customerName: username })
+      .populate("bus")
+      .sort({ bookedAt: -1 });
+    res.json(bookings);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching bookings" });
+  }
 });
 
 /* ---------------- COMPLAINTS ---------------- */
