@@ -230,10 +230,10 @@ return (
   <div className="admin-content">
 
     <div className="admin-sidebar">
-      <button onClick={() => setActiveTab("buses")}>Manage Buses</button>
-      <button onClick={() => setActiveTab("bookings")}>All Bookings</button>
-      <button onClick={() => setActiveTab("users")}>Users</button>
-      <button onClick={() => setActiveTab("complaints")}>User Complaints</button>
+      <button className={activeTab === "buses" ? "active" : ""} onClick={() => setActiveTab("buses")}>Manage Buses</button>
+      <button className={activeTab === "bookings" ? "active" : ""} onClick={() => setActiveTab("bookings")}>All Bookings</button>
+      <button className={activeTab === "users" ? "active" : ""} onClick={() => setActiveTab("users")}>Users</button>
+      <button className={activeTab === "complaints" ? "active" : ""} onClick={() => setActiveTab("complaints")}>User Complaints</button>
     </div>
 
     <div className="admin-main">
@@ -241,8 +241,7 @@ return (
       {activeTab === "buses" && (
         <div>
           <h3>Add New Bus</h3>
-
-          <form onSubmit={handleAddBus}>
+          <form className="admin-form" onSubmit={handleAddBus}>
             <input placeholder="Source City" required
               value={newBus.sourceCity}
               onChange={(e)=>setNewBus({...newBus,sourceCity:e.target.value})}/>
@@ -267,11 +266,150 @@ return (
               value={newBus.busNumber}
               onChange={(e)=>setNewBus({...newBus,busNumber:e.target.value})}/>
 
-            <input type="file" accept="image/*"
-              onChange={(e)=>setNewBus({...newBus,image:e.target.files[0]})}/>
+            <div style={{display:'flex', flexDirection:'column', gap:'5px'}}>
+              <label style={{fontSize:'12px', color:'#666'}}>Bus Image</label>
+              <input type="file" accept="image/*"
+                onChange={(e)=>setNewBus({...newBus,image:e.target.files[0]})}/>
+            </div>
 
-            <button type="submit">Add Bus</button>
+            <button type="submit" className="action-btn">Add Bus</button>
           </form>
+
+          <h3>All Buses</h3>
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Bus No.</th>
+                <th>Source</th>
+                <th>Destination</th>
+                <th>Date</th>
+                <th>Price</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {buses.map((bus) => (
+                <tr key={bus._id}>
+                  <td>{bus.busNumber}</td>
+                  <td>{bus.sourceCity}</td>
+                  <td>{bus.destinationCity}</td>
+                  <td>{new Date(bus.journeyDate).toLocaleDateString()}</td>
+                  <td>₹{bus.price}</td>
+                  <td>
+                    <button className="delete-btn" onClick={() => handleDeleteBus(bus._id)}>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {activeTab === "bookings" && (
+        <div>
+          <h3>All Bookings</h3>
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Bus Info</th>
+                <th>Seats</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {bookings.map((b) => (
+                <tr key={b._id}>
+                  <td>{b.customerName}</td>
+                  <td>{b.bus ? `${b.bus.sourceCity} -> ${b.bus.destinationCity}` : "N/A"}</td>
+                  <td>{b.seatsBooked}</td>
+                  <td>₹{b.totalAmount}</td>
+                  <td><span className="badge">{b.paymentStatus}</span></td>
+                  <td>{new Date(b.bookedAt).toLocaleDateString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {activeTab === "users" && (
+        <div>
+          <h3>Add Admin Account</h3>
+          <form className="admin-form" onSubmit={handleAddUser}>
+            <input placeholder="Username" required value={newUser.username} onChange={(e)=>setNewUser({...newUser, username: e.target.value})} />
+            <input type="password" placeholder="Password" required value={newUser.password} onChange={(e)=>setNewUser({...newUser, password: e.target.value})} />
+            <input placeholder="Email" required value={newUser.email} onChange={(e)=>setNewUser({...newUser, email: e.target.value})} />
+            <input placeholder="Phone" required value={newUser.phone} onChange={(e)=>setNewUser({...newUser, phone: e.target.value})} />
+            <select value={newUser.role} onChange={(e)=>setNewUser({...newUser, role: e.target.value})}>
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+            </select>
+            <button type="submit" className="action-btn">Create Account</button>
+          </form>
+
+          <h3 style={{marginTop:'30px'}}>All Users</h3>
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((u) => (
+                <tr key={u._id}>
+                  <td>{u.username}</td>
+                  <td>{u.email}</td>
+                  <td>{u.phone}</td>
+                  <td><span className={u.role === 'admin' ? 'role-admin' : 'role-user'}>{u.role}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {activeTab === "complaints" && (
+        <div>
+          <h3>User Complaints</h3>
+          <div className="complaints-container">
+            {complaints.length === 0 ? <p>No complaints found.</p> : complaints.map((c) => (
+              <div key={c._id} className="section-card" style={{padding:'20px', marginBottom:'15px', border:'1px solid #eee'}}>
+                <div style={{display:'flex', justifyContent:'space-between', marginBottom:'10px'}}>
+                  <strong>{c.username}</strong>
+                  <span style={{fontSize:'12px', color:'#888'}}>{new Date(c.createdAt).toLocaleString()}</span>
+                </div>
+                <p><strong>Subject:</strong> {c.subject}</p>
+                <div style={{background:'#f9f9f9', padding:'10px', borderRadius:'8px', margin:'10px 0'}}>
+                  <p>{c.message}</p>
+                </div>
+                
+                {c.reply ? (
+                  <div style={{borderLeft:'4px solid #4caf50', paddingLeft:'15px', marginTop:'15px'}}>
+                    <p style={{color:'#4caf50', fontWeight:'bold', fontSize:'13px'}}>✓ Replied by {c.repliedByAdmin}:</p>
+                    <p>{c.reply}</p>
+                  </div>
+                ) : (
+                  <div style={{marginTop:'15px'}}>
+                    <textarea 
+                      placeholder="Write your reply here..."
+                      style={{width:'100%', padding:'10px', borderRadius:'8px', border:'1px solid #ddd', minHeight:'80px'}}
+                      value={replyText[c._id] || ""}
+                      onChange={(e) => setReplyText({...replyText, [c._id]: e.target.value})}
+                    />
+                    <button className="action-btn" onClick={() => handleReply(c._id)} style={{marginTop:'10px'}}>
+                      Send Reply
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
