@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../apiConfig";
 
 function ContactUs() {
   const [subject, setSubject] = useState("");
@@ -26,7 +27,7 @@ function ContactUs() {
   const fetchComplaints = async () => {
     try {
       const res = await fetch(
-        `http://127.0.0.1:5000/api/complaints/${username}`,
+        `${API_BASE}/api/complaints/${username}`,
       );
       const data = await res.json();
       setComplaints(data);
@@ -38,7 +39,7 @@ function ContactUs() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/complaints", {
+      const res = await fetch(`${API_BASE}/api/complaints`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, subject, message }),

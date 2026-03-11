@@ -1,3 +1,4 @@
+import { API_BASE } from "../apiConfig";
 import React, { useState, useEffect } from "react";
 import SearchBuses from "../components/SearchBuses";
 import SeatSelection from "../components/SeatSelection";
@@ -37,7 +38,7 @@ function Dashboard() {
   }, [user, role]);
 
   const loadBuses = async (filters = {}) => {
-    let url = "http://127.0.0.1:5000/api/buses";
+    let url = `${API_BASE}/api/buses`;
     const query = new URLSearchParams(filters).toString();
     if (query) url += `?${query}`;
     const res = await fetch(url);
@@ -46,14 +47,14 @@ function Dashboard() {
   };
 
   const loadBookings = async () => {
-    const res = await fetch(`http://127.0.0.1:5000/api/my-bookings/${user}`);
+    const res = await fetch(`${API_BASE}/api/my-bookings/${user}`);
     const data = await res.json();
     setBookings(data);
   };
 
   const fetchComplaints = async () => {
     try {
-      const res = await fetch(`http://127.0.0.1:5000/api/complaints/${user}`);
+      const res = await fetch(`${API_BASE}/api/complaints/${user}`);
       const data = await res.json();
       setComplaints(data);
     } catch (err) {
@@ -89,7 +90,7 @@ function Dashboard() {
       alert("Please select seats");
       return;
     }
-    await fetch("http://127.0.0.1:5000/api/bookings", {
+    await fetch(`${API_BASE}/api/bookings`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

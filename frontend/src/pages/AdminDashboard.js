@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../apiConfig";
 
-const API = "https://mern-bus-reservation-system-1.onrender.com";
+const API = API_BASE;
 
 function AdminDashboard() {
 const [buses, setBuses] = useState([]);

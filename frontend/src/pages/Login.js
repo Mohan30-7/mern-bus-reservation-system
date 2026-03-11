@@ -1,3 +1,4 @@
+import { API_BASE } from "../apiConfig";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,14 +14,11 @@ e.preventDefault();
 
 
 try {
-  const res = await fetch(
-    "https://mern-bus-reservation-system-1.onrender.com/api/login",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    }
-  );
+  const res = await fetch(`${API_BASE}/api/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
 
   const data = await res.json();
 
@@ -61,7 +59,7 @@ textAlign: "center",
 <h1 style={{ color: "#e53935", marginBottom: 5, fontSize: "28px" }}>
 🚌 MV Bus </h1>
 
-```
+
     <h2 style={{ marginBottom: 10, color: "#333" }}>Login</h2>
 
     <p style={{ marginBottom: 25, color: "#666" }}>

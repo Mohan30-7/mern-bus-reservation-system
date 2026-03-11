@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { API_BASE } from "../apiConfig";
 
 function ForgotPassword() {
   const [username, setUsername] = useState("");
@@ -9,7 +10,7 @@ function ForgotPassword() {
   const handleForgot = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://127.0.0.1:5000/api/forgot-password", {
+      const res = await fetch(`${API_BASE}/api/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username }),

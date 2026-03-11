@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API_BASE } from "../apiConfig";
 
 const UserProfile = () => {
   const [profile, setProfile] = useState({ email: "", phone: "" });
@@ -8,7 +9,7 @@ const UserProfile = () => {
     if (!user) {
       window.location.href = "/";
     }
-    fetch(`http://127.0.0.1:5000/api/user/${user}`)
+    fetch(`${API_BASE}/api/user/${user}`)
       .then((res) => res.json())
       .then((data) => {
         if (data && !data.message) {
@@ -19,7 +20,7 @@ const UserProfile = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    const res = await fetch(`http://127.0.0.1:5000/api/user/${user}`, {
+    const res = await fetch(`${API_BASE}/api/user/${user}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(profile),
