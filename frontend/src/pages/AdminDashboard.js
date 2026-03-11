@@ -41,7 +41,7 @@ navigate("/dashboard");
 return;
 }
 
-```
+
 fetchData();
 
 const intervalId = setInterval(() => {
@@ -49,7 +49,7 @@ const intervalId = setInterval(() => {
 }, 2000);
 
 return () => clearInterval(intervalId);
-```
+
 
 }, [role, navigate]);
 
