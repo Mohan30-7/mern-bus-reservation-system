@@ -311,22 +311,30 @@ return (
           <table className="admin-table">
             <thead>
               <tr>
-                <th>Customer</th>
-                <th>Bus Info</th>
+                <th>Customer Name</th>
+                <th>Bus</th>
+                <th>Passengers</th>
                 <th>Seats</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Date</th>
+                <th>Total Price</th>
+                <th>Booking Date</th>
               </tr>
             </thead>
             <tbody>
               {bookings.map((b) => (
                 <tr key={b._id}>
                   <td>{b.customerName}</td>
-                  <td>{b.bus ? `${b.bus.sourceCity} -> ${b.bus.destinationCity}` : "N/A"}</td>
+                  <td>
+                    {b.bus 
+                      ? `${b.bus.sourceCity} → ${b.bus.destinationCity} (No. ${b.bus.busNumber})` 
+                      : "N/A"}
+                  </td>
+                  <td>
+                    {b.passengers && b.passengers.length > 0
+                      ? b.passengers.map(p => p.name).join(", ")
+                      : "None"}
+                  </td>
                   <td>{b.seatsBooked}</td>
                   <td>₹{b.totalAmount}</td>
-                  <td><span className="badge">{b.paymentStatus}</span></td>
                   <td>{new Date(b.bookedAt).toLocaleDateString()}</td>
                 </tr>
               ))}
