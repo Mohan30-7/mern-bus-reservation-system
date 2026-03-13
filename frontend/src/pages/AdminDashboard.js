@@ -351,9 +351,8 @@ return (
             <input type="password" placeholder="Password" required value={newUser.password} onChange={(e)=>setNewUser({...newUser, password: e.target.value})} />
             <input placeholder="Email" required value={newUser.email} onChange={(e)=>setNewUser({...newUser, email: e.target.value})} />
             <input placeholder="Phone" required value={newUser.phone} onChange={(e)=>setNewUser({...newUser, phone: e.target.value})} />
-            <select value={newUser.role} onChange={(e)=>setNewUser({...newUser, role: e.target.value})}>
+            <select value={newUser.role} disabled>
               <option value="admin">Admin</option>
-              <option value="user">User</option>
             </select>
             <button type="submit" className="action-btn">Create Account</button>
           </form>
