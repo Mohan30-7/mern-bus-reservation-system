@@ -362,6 +362,33 @@ app.post("/api/admin/users", async (req, res) => {
   }
 });
 
+/* ---------------- USER PROFILE ---------------- */
+
+app.get("/api/user/:username", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username }, "email phone");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching profile" });
+  }
+});
+
+app.put("/api/user/:username", async (req, res) => {
+  try {
+    const { email, phone } = req.body;
+    const user = await User.findOneAndUpdate(
+      { username: req.params.username },
+      { email, phone },
+      { new: true }
+    );
+    if (!user) return res.status(404).json({ message: "User not found" });
+    res.json({ message: "Profile updated successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error updating profile" });
+  }
+});
+
 /* ---------------- HEALTH CHECK ---------------- */
 
 app.get("/api/health", async (req, res) => {
