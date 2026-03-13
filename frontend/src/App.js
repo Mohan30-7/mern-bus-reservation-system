@@ -1,4 +1,6 @@
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { API_BASE } from "./apiConfig";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
@@ -7,7 +9,13 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ContactUs from "./pages/ContactUs";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+
 function App() {
+  useEffect(() => {
+    // Proactively wake up the Render backend on app load
+    fetch(`${API_BASE}/api/health`).catch(() => {});
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>

@@ -229,6 +229,15 @@ res.status(500).json({ message: "Error adding bus" });
 }
 });
 
+app.delete("/api/admin/buses/:id", async (req, res) => {
+  try {
+    await Bus.findByIdAndDelete(req.params.id);
+    res.json({ message: "Bus deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting bus" });
+  }
+});
+
 /* ---------------- BOOKINGS ---------------- */
 
 app.post("/api/bookings", async (req, res) => {
@@ -271,6 +280,17 @@ app.get("/api/my-bookings/:username", async (req, res) => {
   }
 });
 
+app.get("/api/admin/bookings", async (req, res) => {
+  try {
+    const bookings = await Booking.find()
+      .populate("bus")
+      .sort({ bookedAt: -1 });
+    res.json(bookings);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching admin bookings" });
+  }
+});
+
 /* ---------------- COMPLAINTS ---------------- */
 
 app.post("/api/complaints", async (req, res) => {
@@ -301,6 +321,44 @@ app.get("/api/admin/complaints", async (req, res) => {
     res.json(complaints);
   } catch (err) {
     res.status(500).json({ message: "Error fetching complaints" });
+  }
+});
+
+app.put("/api/admin/complaints/:id/reply", async (req, res) => {
+  try {
+    const { reply, repliedByAdmin } = req.body;
+    const complaint = await Complaint.findByIdAndUpdate(
+      req.params.id,
+      { reply, repliedByAdmin },
+      { new: true }
+    );
+    res.json(complaint);
+  } catch (err) {
+    res.status(500).json({ message: "Error replying to complaint" });
+  }
+});
+
+/* ---------------- USERS ---------------- */
+
+app.get("/api/admin/users", async (req, res) => {
+  try {
+    const users = await User.find().sort({ createdAt: -1 });
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching users" });
+  }
+});
+
+app.post("/api/admin/users", async (req, res) => {
+  try {
+    const { username, password, email, phone, role } = req.body;
+    const exists = await User.findOne({ username });
+    if (exists) return res.status(400).json({ message: "User already exists" });
+
+    await User.create({ username, password, email, phone, role });
+    res.json({ message: "User created successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error creating user" });
   }
 });
 
