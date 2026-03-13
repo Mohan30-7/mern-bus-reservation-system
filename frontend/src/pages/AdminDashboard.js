@@ -221,7 +221,7 @@ return (
 
 
     <div className="nav-right">
-      <button onClick={handleLogout}>
+      <button className="nav-link" onClick={handleLogout}>
         🚪 Logout ({username})
       </button>
     </div>
