@@ -329,7 +329,7 @@ app.put("/api/admin/complaints/:id/reply", async (req, res) => {
     const { reply, repliedByAdmin } = req.body;
     const complaint = await Complaint.findByIdAndUpdate(
       req.params.id,
-      { reply, repliedByAdmin },
+      { reply, repliedByAdmin, isResolved: true },
       { new: true }
     );
     res.json(complaint);
