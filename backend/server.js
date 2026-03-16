@@ -141,7 +141,7 @@ const { username, password } = req.body;
 
 const user = await User.findOne({ username });
 
-if (!user || user.password !== password)
+if (!user || !(await user.comparePassword(password)))
 return res.status(400).json({ message: "Invalid credentials" });
 
 res.json({ username: user.username, role: user.role });
