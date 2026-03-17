@@ -35,7 +35,15 @@ userSchema.pre("save", async function () {
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
+  // Check if the stored password looks like a bcrypt hash
+  const isHashed = this.password.startsWith("$2a$") || this.password.startsWith("$2b$");
+  
+  if (isHashed) {
+    return await bcrypt.compare(candidatePassword, this.password);
+  }
+  
+  // Fallback for plain-text passwords
+  return candidatePassword === this.password;
 };
 
 module.exports = mongoose.model("User", userSchema);

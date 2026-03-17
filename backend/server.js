@@ -150,6 +150,15 @@ app.post("/api/login", async (req, res) => {
     if (!user || !(await user.comparePassword(password)))
       return res.status(400).json({ message: "Invalid credentials" });
 
+    // Lazy migration: if password is not hashed, hash it now
+    const isHashed = user.password.startsWith("$2a$") || user.password.startsWith("$2b$");
+    if (!isHashed) {
+      user.password = password; 
+      user.markModified("password"); // Force the pre-save hook to hash it
+      await user.save();
+      console.log(`Password for user ${user.username} has been migrated to hash.`);
+    }
+
     res.json({ username: user.username, role: user.role });
   } catch (err) {
     console.error("Login error:", err);
