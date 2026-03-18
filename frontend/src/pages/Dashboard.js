@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import SearchBuses from "../components/SearchBuses";
 import SeatSelection from "../components/SeatSelection";
 import PassengerDetails from "../components/PassengerDetails";
+import Navbar from "../components/Navbar";
 
 function Dashboard() {
   const [buses, setBuses] = useState([]);
@@ -189,43 +190,7 @@ function Dashboard() {
 
   return (
     <>
-      <header className="top-nav">
-        <div className="nav-left">
-          <span className="brand">🚌 MV Bus</span>
-        </div>
-        <div className="nav-right">
-          <button
-            className="nav-link"
-            onClick={() => (window.location.href = "/dashboard")}
-            style={{ color: "#e53935", fontWeight: "bold" }}
-          >
-            Home
-          </button>
-          <button
-            className="nav-link"
-            onClick={() => (window.location.href = "/contact")}
-          >
-            💛 Support
-          </button>
-          <button
-            className="nav-link"
-            onClick={() => (window.location.href = "/profile")}
-          >
-            👤 Profile
-          </button>
-          {role === "admin" && (
-            <button
-              className="nav-link"
-              onClick={() => (window.location.href = "/admin")}
-            >
-              Admin Panel
-            </button>
-          )}
-          <button className="nav-link" onClick={logout}>
-            🚪 Logout ({user})
-          </button>
-        </div>
-      </header>
+      <Navbar />
 
       <div className="container" style={{ marginTop: "20px" }}>
         {!selectedBus ? (

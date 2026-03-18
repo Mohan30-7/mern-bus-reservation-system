@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_BASE } from "../apiConfig";
+import Navbar from "../components/Navbar";
 
 const API = API_BASE;
 
@@ -217,15 +218,7 @@ try {
 };
 
 return (
-<> <header className="top-nav"> <div className="nav-left"> <span className="brand">🚌 Admin Panel</span> </div>
-
-
-    <div className="nav-right">
-      <button className="nav-link" onClick={handleLogout}>
-        🚪 Logout ({username})
-      </button>
-    </div>
-  </header>
+<> <Navbar />
 
   <div className="admin-content">
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_BASE } from "../apiConfig";
+import Navbar from "../components/Navbar";
 
 function ContactUs() {
   const [subject, setSubject] = useState("");
@@ -65,30 +66,7 @@ function ContactUs() {
 
   return (
     <div className="premium-page">
-      <header className="top-nav">
-        <div className="nav-left">
-          <span className="brand">🚌 MV Bus</span>
-        </div>
-        <div className="nav-right">
-          <button className="nav-link" onClick={() => (window.location.href = "/dashboard")}>
-            Home
-          </button>
-          <button className="nav-link" onClick={() => (window.location.href = "/contact")} style={{ color: '#e53935', fontWeight: 'bold' }}>
-            💛 Support
-          </button>
-          <button className="nav-link" onClick={() => (window.location.href = "/profile")}>
-            👤 Profile
-          </button>
-          {role === "admin" && (
-            <button className="nav-link" onClick={() => (window.location.href = "/admin")}>
-              Admin Panel
-            </button>
-          )}
-          <button className="nav-link" onClick={logout}>
-            🚪 Logout ({username})
-          </button>
-        </div>
-      </header>
+      <Navbar />
 
       <div className="premium-card">
         <h2 style={{ color: "#ff6b6b", fontSize: '28px', marginBottom: '10px' }}>Contact Support</h2>

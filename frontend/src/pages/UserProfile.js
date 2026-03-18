@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { API_BASE } from "../apiConfig";
+import Navbar from "../components/Navbar";
 
 const UserProfile = () => {
   const [profile, setProfile] = useState({ email: "", phone: "" });
@@ -34,34 +35,7 @@ const UserProfile = () => {
 
   return (
     <div className="premium-page">
-      <header className="top-nav">
-        <div className="nav-left">
-          <span className="brand">🚌 MV Bus</span>
-        </div>
-        <div className="nav-right">
-          <button className="nav-link" onClick={() => (window.location.href = "/dashboard")}>
-            Home
-          </button>
-          <button className="nav-link" onClick={() => (window.location.href = "/contact")}>
-            💛 Support
-          </button>
-          <button className="nav-link" onClick={() => (window.location.href = "/profile")} style={{ color: '#e53935', fontWeight: 'bold' }}>
-            👤 Profile
-          </button>
-          {localStorage.getItem("role") === "admin" && (
-            <button className="nav-link" onClick={() => (window.location.href = "/admin")}>
-              Admin Panel
-            </button>
-          )}
-          <button className="nav-link" onClick={() => {
-            localStorage.removeItem("username");
-            localStorage.removeItem("role");
-            window.location.href = "/";
-          }}>
-            🚪 Logout ({user})
-          </button>
-        </div>
-      </header>
+      <Navbar />
 
       <div className="premium-card" style={{ maxWidth: '600px' }}>
         <div className="profile-header">
